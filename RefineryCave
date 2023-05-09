@@ -110,6 +110,7 @@ PlayerSec:AddToggle({
     end
 })
 
+
 -- Fly Speed
 local FlightTriggerKey = "q"-- flight key
 local CurrentlyFlying = false
@@ -213,11 +214,3 @@ local Tab = Window:MakeTab({
 local Section = Tab:AddSection({
 	Name = "Sky options"
 })
-
-
-local Tab = Window:MakeTab({
-	Name = "Credits",
-	Icon = "rbxassetid://",
-	PremiumOnly = false
-})
-Tab:AddLabel("Daddy Ripp3r#0001 - owner/coder")
