@@ -502,9 +502,6 @@ GraphicOptions:AddButton({
 
 -- Credits
 CreditSec:AddParagraph("Daddy Ripp3r#0001","proprietor and developer of the hub")
-CreditSec:AddParagraph("kermit the frog#6253","a highly esteemed acquaintance of mine whom I greatly admire")
-CreditSec:AddParagraph("Applebox#0001","devised the key system")
-CreditSec:AddParagraph("Nix.#5706", "helped implemented features")
 
  
 
