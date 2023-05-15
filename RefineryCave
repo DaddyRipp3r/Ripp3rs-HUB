@@ -1,128 +1,20 @@
---[[──────────────────────────────────────────────────────────────────
-To Do:
-- Fix x etc
-- 
+local scriptver = "v1.0"
 
-
-Bugs:
-- When doing x, x happens
-- 
-
-
-Ideas:
-- wonder if i can do x etc
-
-
-Suggestions:
-- someone suggested x etc
-
-
-──────────────────────────────────────────────────────────────────]]
-
-
-
-
-
-------------------------------------------
---messagebox("Ripp3rs-Hub Successully Loaded", "Successully Loaded", 0)
-------------------------------------------
-
-
--- script version
-local scriptver = "BETA"
-
--- library
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Ripp3rs-hub ┃ ".. scriptver, HidePremium = true, SaveConfig = true, ConfigFolder = "Ripp3r", IntroText = "Ripp3rs-Hub", IntroIcon = "rbxassetid://6034227061"})
+local Window = OrionLib:MakeWindow({Name = "Ripp3r-hub ┃ ".. scriptver, HidePremium = true, SaveConfig = true, ConfigFolder = "Ripp3r", IntroText = "Ripp3r-Hub", IntroIcon = "https://i.e-z.host/nbo558hv.png"})
 
-
-
-
-
---------------   tabs   --------------
--- Player Tab
-local PlayerTab = Window:MakeTab({
+local Tab = Window:MakeTab({
     Name = "Player",
     Icon = "rbxassetid://",
     PremiumOnly = false
 })
 
--- World
-local WorldTab = Window:MakeTab({
-	Name = "World",
-	Icon = "rbxassetid://",
-	PremiumOnly = false
-})
-
-
--- GUI Settings
---local SettingsTab = Window:MakeTab({
---	Name = "Gui-Settings",
---	Icon = "rbxassetid://",
---	PremiumOnly = false
---})
-
-
--- Credits
-local CreditTab = Window:MakeTab({
-	Name = "Credits",
-	Icon = "rbxassetid://",
-	PremiumOnly = false
-})
-
--- Credits
-local SettingsTab = Window:MakeTab({
-	Name = "Settings",
-	Icon = "rbxassetid://",
-	PremiumOnly = false
-})
-
-local Tab = Window:NewTab("Teleport")
---------------   tabs   --------------
-
-
-
-
-
--------------- Sections --------------
--- Player
-local PlayerSec = PlayerTab:AddSection({
+local Section = Tab:AddSection({
     Name = "Player"
 })
 
---- Sky Options
---local SkyOptions = WorldTab:AddSection({
---	Name = "Sky Options"
---})
-
---- EnvOptions Options
-local EnvOptions = WorldTab:AddSection({
-	Name = "Environment Options"
-})
-
-
---- Graphic Options
-local GraphicOptions = WorldTab:AddSection({
-	Name = "Graphic Options"
-})
-
-
-local CreditSec = CreditTab:AddSection({
-    Name = "Credits"
-})
-
-local SettingsSec = SettingsTab:AddSection({
-    Name = "Settings"
-})
--------------- Sections --------------
-
-
-
-
-
--- Walk Speed
-PlayerSec:AddSlider({
-    Name = "Walk Speed",
+Tab:AddSlider({
+    Name = "Walkspeed",
     Min = 16,
     Max = 500,
     Default = 16,
@@ -130,22 +22,18 @@ PlayerSec:AddSlider({
     Increment = 1,
     ValueName = "",
     Callback = function(new)
-    _G.WS = new;
+        _G.WS = new;
     local Humanoid = game:GetService("Players").LocalPlayer.Character.Humanoid;
     Humanoid:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
         Humanoid.WalkSpeed = _G.WS;
     end)
     Humanoid.WalkSpeed = _G.WS;
-    end
+    end    
 })
 
 
-
-
-
--- Jump Power
-PlayerSec:AddSlider({
-    Name = "Jump Power",
+Tab:AddSlider({
+    Name = "Jumppower",
     Min = 50,
     Max = 500,
     Default = 50,
@@ -159,32 +47,51 @@ PlayerSec:AddSlider({
         Humanoid.JumpPower = _G.JP
         end)
         Humanoid.JumpPower = _G.JP
+    end    
+})
+
+
+
+
+function toggleNoClip()
+    local disableCollide 
+    disableCollide = game:GetService("RunService").Stepped:connect(function()
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+    if noclipping == false then
+    disableCollide:Disconnect()
+    return
+    end
+    if v:IsA("BasePart") then
+    v.CanCollide = false
+    end
+    end
+    end)
+    end
+
+
+
+Tab:AddToggle({
+    Name = "Noclip",
+    Default = false,
+    Callback = function(value)
+        if value == true then
+            noclipping = true
+            toggleNoClip()
+            elseif value == false then
+            noclipping = false
+            toggleNoClip()
+            end
+end})
+
+
+PlayerSec:AddToggle({
+    Name = "Flight",
+    Default = false,
+    Callback = function(Value)
+    CurrentlyFlying = Value
     end
 })
 
-
-
-
-
--- Field Of View
-PlayerSec:AddSlider({
-	Name = "FOV",
-	Min = 70,
-	Max = 140,
-	Default = 70,
-	Color = Color3.fromRGB(255, 255, 255),
-	Increment = 1,
-	ValueName = "",
-	Callback = function(Value)
-		game:GetService("Workspace").Camera.FieldOfView = (Value)
-	end
-})
-
-
-
-
-
--- Fly Speed
 local FlightTriggerKey = "q"-- flight key
 local CurrentlyFlying = false
 PlayerSec:AddSlider({
@@ -278,78 +185,32 @@ PlayerFlightUwU()
 })
 
 
+        
 
 
-
--- No Clip
-local noclipping = false
-
-function toggleNoClip()
-    local disableCollide 
-    disableCollide = game:GetService("RunService").Stepped:connect(function()
-        for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-            if noclipping == false then
-                disableCollide:Disconnect()
-                return
-            end
-            if v:IsA("BasePart") then
-                v.CanCollide = false
-            end
-        end
-    end)
-end
-
-PlayerSec:AddToggle({
-     Name = "Noclip",
-     Default = false,
-     Callback = function(Value)
-     if Value then
-         noclipping = true
-         toggleNoClip()
-     else
-         noclipping = false
-         toggleNoClip()
-     end
-end
+Tab:AddSlider({
+    Name = "FOV",
+    Min = 70,
+    Max = 140,
+    Default = 70,
+    Color = Color3.fromRGB(0,0,0),
+    Increment = 1,
+    ValueName = "",
+    Callback = function(new)
+        game.Workspace.Camera.FieldOfView = new
+    end    
 })
 
 
-
-
-
--- Fly Toggle
-PlayerSec:AddToggle({
-    Name = "Flight",
-    Default = false,
-    Callback = function(Value)
-    CurrentlyFlying = Value
-    end
+local WorldTab = Window:MakeTab({
+	Name = "World",
+	Icon = "rbxassetid://",
+	PremiumOnly = false
 })
 
-
-
-
-
--- Infinite Jump
-PlayerSec:AddToggle({
-    Name = "Infinite Jump",
-    Default = false,
-    Callback = function(value)
-    if value then
-    getgenv().ifj = true
-    connection = game:GetService("UserInputService").JumpRequest:connect(function()
-    if not getgenv().ifj then connection:disconnect() end
-    game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
-    end)
-    else
-    getgenv().ifj = false
-    end
-end
+local EnvOptions = WorldTab:AddSection({
+	Name = "Environment Options"
 })
-
-
-
-
 
 EnvOptions:AddLabel("Do not enable always day / always night at same time.")
 local TODRequirements = {
@@ -499,37 +360,12 @@ GraphicOptions:AddButton({
 })
 
 
-
-
-
--- Credits
-CreditSec:AddParagraph("Daddy Ripp3r#0001","proprietor and developer of the hub")
-
- 
-
-
-
-
--- Server Hop
-SettingsSec:AddButton({
-	Name = "Server Hop",
-	Callback = function()
-		OrionLib:MakeNotification({
-			Name = "Server Hop",
-			Content = "Attempting to hop servers",
-			Image = "rbxassetid://4483345998",
-			Time = 5
-		})
-		local placeId = "13822889"
-		game:GetService("TeleportService"):Teleport(placeId)
-	end
+local Tab = Window:MakeTab({
+	Name = "Settings",
+	Icon = "rbxassetid://",
+	PremiumOnly = false
 })
 
-
-
-
-
--- ReJoin Server
 SettingsSec:AddButton({
     Name = "Rejoin Server",
     Callback = function()
@@ -554,37 +390,23 @@ else
     end
     })
 
+SettingsSec:AddButton({
+	Name = "Server Hop",
+	Callback = function()
+		OrionLib:MakeNotification({
+			Name = "Server Hop",
+			Content = "Attempting to hop servers",
+			Image = "rbxassetid://4483345998",
+			Time = 5
+		})
+		local placeId = "13822889"
+		game:GetService("TeleportService"):Teleport(placeId)
+	end
+})
 
-
-
-
-OrionLib:Init()
-
---Teleports--
-local Section = Tab:NewSection
-
-Section:NewButton("Stone shop", "Teleport to Stone shop inside of mines", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(745, 5, 60)
-end)
-Section:NewButton("Cave entrance", "Teleport to Cave entrance outside of mines", function()
-     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(60, 5, 15)
-end)
-Section:NewButton("MainShop", "Teleport to MainShop", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1025, 6, -610)
-end)
-Section:NewButton("Mines(Outside of MainShop)", "Teleport to mines", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1155, 6, -600)
-end)
-Section:NewButton("SellArea", "Teleport to SellArea", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-465, 7, -65)
-end)
-Section:NewButton("Secret Room", "Teleport to secret room and brag to your friends", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(132, 90, 1080)
-end)
-Section:NewButton("TrainEnd", "Teleport to the end of train tracks and dont waste 300 bucks", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-160, 200, 500)
-end)
-Section:NewButton("Maze", "Teleport to the Maze", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1121, -198, 540)
-end)
---end of teleports--
+local Tab = Window:MakeTab({
+	Name = "Credits",
+	Icon = "rbxassetid://",
+	PremiumOnly = false
+})
+Tab:AddLabel("Daddy Ripp3r#0001 - owner/coder")
