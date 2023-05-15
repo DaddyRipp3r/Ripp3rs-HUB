@@ -54,6 +54,12 @@ local WorldTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
+-- Teleport Tab
+local PlayerTab = Window:MakeTab({
+    Name = "Teleport",
+    Icon = "rbxassetid://",
+    PremiumOnly = false
+})
 
 -- GUI Settings
 --local SettingsTab = Window:MakeTab({
@@ -104,6 +110,10 @@ local GraphicOptions = WorldTab:AddSection({
 	Name = "Graphic Options"
 })
 
+
+local SettingsSec = SettingsTab:AddSection({
+    Name = "Telport"
+})
 
 local CreditSec = CreditTab:AddSection({
     Name = "Credits"
@@ -496,6 +506,32 @@ GraphicOptions:AddButton({
 	end
 })
 
+
+Section:NewButton("Stone shop", "Teleport to Stone shop inside of mines", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(745, 5, 60)
+end)
+Section:NewButton("Cave entrance", "Teleport to Cave entrance outside of mines", function()
+     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(60, 5, 15)
+end)
+Section:NewButton("MainShop", "Teleport to MainShop", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1025, 6, -610)
+end)
+Section:NewButton("Mines(Outside of MainShop)", "Teleport to mines", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1155, 6, -600)
+end)
+Section:NewButton("SellArea", "Teleport to SellArea", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-465, 7, -65)
+end)
+Section:NewButton("Secret Room", "Teleport to secret room and brag to your friends", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(132, 90, 1080)
+end)
+Section:NewButton("TrainEnd", "Teleport to the end of train tracks and dont waste 300 bucks", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-160, 200, 500)
+end)
+Section:NewButton("Maze", "Teleport to the Maze", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1121, -198, 540)
+end)
+--end of teleports--
 
 
 
