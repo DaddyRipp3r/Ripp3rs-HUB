@@ -76,6 +76,8 @@ local SettingsTab = Window:MakeTab({
 	Icon = "rbxassetid://",
 	PremiumOnly = false
 })
+
+local Tab = Window:NewTab("Teleport")
 --------------   tabs   --------------
 
 
@@ -558,9 +560,8 @@ else
 
 OrionLib:Init()
 
-local Tab = Window:NewTab("Teleport")
 --Teleports--
-local Section = Tab:NewSection("Made by | count egg#0111")
+local Section = Tab:NewSection
 
 Section:NewButton("Stone shop", "Teleport to Stone shop inside of mines", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(745, 5, 60)
